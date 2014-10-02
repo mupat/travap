@@ -1,0 +1,9 @@
+{
+  "name": "travap",
+  "private": true,
+  "dependencies": {
+    "leaflet": "~0.7.3",
+    "angular": "~1.2.23",
+    "angular-route": "~1.2.23"
+  }
+}
