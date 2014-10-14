@@ -2,14 +2,37 @@ gulp = require 'gulp'
 gTasks = require 'gulp-tasks'
 nodeDev = require 'node-dev'
 
-dest = "#{__dirname}/dest"
-src = 
-  scripts: "#{__dirname}/client/scripts/main.coffee"
+base = "#{__dirname}/dest"
+bower = "#{__dirname}/bower_components"
+dest =
+  base: base
+  templates: "#{base}/templates"
+  vendor:
+    js: "#{base}/vendor/js"
+    css: "#{base}/vendor/css"
+
+src =
+  scripts:
+    main: "#{__dirname}/client/scripts/main.coffee"
+    watch: "#{__dirname}/client/scripts/**/*.coffee"
   templates:
     index: "#{__dirname}/client/index.jade"
-    files: "#{__dirname}/client/template/**/*.jade"
+    files: "#{__dirname}/client/templates/**/*.jade"
   styles: "#{__dirname}/client/styles/main.less"
   server: "#{__dirname}/server/index.coffee"
+  vendor:
+    js: [
+      "#{bower}/angular/angular.min.js"
+      "#{bower}/angular-route/angular-route.min.js"
+      "#{bower}/angular-resource/angular-resource.min.js"
+      "#{bower}/angular/angular.min.js.map"
+      "#{bower}/angular-route/angular-route.min.js.map"
+      "#{bower}/angular-resource/angular-resource.min.js.map"
+      "#{bower}/leaflet/dist/leaflet.js"
+    ]
+    css: [
+      "#{bower}/leaflet/dist/leaflet.css"
+    ]
 
 gulp.task 'build', [
   'build:scripts'
@@ -18,24 +41,25 @@ gulp.task 'build', [
 ]
 
 gulp.task 'build:scripts', ->
-  gTasks.browserify.build src.scripts, dest
+  gTasks.browserify.build src.scripts.main, dest.base
+  gTasks.misc.copy src.vendor.js, dest.vendor.js
 
-gulp.task 'build:templates', ->  
-  gTasks.jade.build src.templates.index, dest, true
-  gTasks.jade.build src.templates.files, dest, true
+gulp.task 'build:templates', ->
+  gTasks.jade.build src.templates.index, dest.base, true
+  gTasks.jade.build src.templates.files, dest.templates, true
 
 gulp.task 'build:styles', ->
-  gTasks.less.build src.styles, dest
+  gTasks.less.build src.styles, dest.base
+  gTasks.misc.copy src.vendor.css, dest.vendor.css
 
 gulp.task 'server', ->
-  # gTasks.livereload.contentServer dest
-  gTasks.livereload.livereloadServer dest
+  gTasks.livereload.livereloadServer dest.base
   nodeDev [src.server]
 
 gulp.task 'start', ['build', 'server']
 
 gulp.task 'watch', ['build', 'server'], ->
-  gulp.watch src.scripts, ['build:scripts']
+  gulp.watch src.scripts.watch, ['build:scripts']
   gulp.watch [src.templates.index, src.templates.files], ['build:templates']
   gulp.watch src.styles, ['build:styles']
 

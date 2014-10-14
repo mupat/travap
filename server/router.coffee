@@ -35,7 +35,7 @@ class Router
     @_directoryExists "#{@baseDirectory}/#{name}", (err) =>
       return next err if err
 
-      host = req.header['Host']
+      host = "http://#{req.headers['host']}"
       @places.getAllImages name, host, (err, images) ->
         return next err if err
         res.json images
@@ -44,7 +44,7 @@ class Router
     # set directory to baseDirectory, if no one special is provided
     unless typeof directory is 'string'
       done = directory
-      directory = @baseDirectory 
+      directory = @baseDirectory
 
     fs.exists directory, (exists) ->
       error = if exists then undefined else new Error "#{directory} doesnt exists"

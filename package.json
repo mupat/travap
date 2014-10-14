@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "simple map to show images from journeys placed on a map",
   "scripts": {
-    "start": "./node_modules/.bin/gulp"
+    "start": "./node_modules/.bin/gulp",
+    "install": "./node_modules/.bin/bower update && ./node_modules/.bin/bower install"
   },
   "repository": {
     "type": "git",
