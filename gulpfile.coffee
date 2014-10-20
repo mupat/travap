@@ -29,6 +29,8 @@ src =
       "#{bower}/angular-route/angular-route.min.js.map"
       "#{bower}/angular-resource/angular-resource.min.js.map"
       "#{bower}/leaflet/dist/leaflet.js"
+      "#{bower}/leaflet-angular-icon/leaflet-angular-icon.min.js"
+      "#{bower}/leaflet-grayscale/TileLayer.Grayscale.js"
     ]
     css: [
       "#{bower}/leaflet/dist/leaflet.css"

@@ -3,6 +3,8 @@
   "private": true,
   "dependencies": {
     "leaflet": "~0.7.3",
+    "leaflet-grayscale": "Zverik/leaflet-grayscale",
+    "leaflet-angular-icon": "mupat/leaflet-angular-icon",
     "angular": "~1.2.26",
     "angular-route": "~1.2.26",
     "angular-resource": "~1.2.26"

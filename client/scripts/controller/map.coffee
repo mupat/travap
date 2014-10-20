@@ -1,7 +1,6 @@
 leaflet = require 'leaflet'
 
 class Map
-  TILES_BW: 'http://a.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
   TILES_WATERCOLOR: "http://a.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg"
   BASE_TILE_OPTIONS:
     minZoom: 3
@@ -11,24 +10,49 @@ class Map
     zoom: 6
     closePopupOnClick: false
     attributionControl: false
+  MARKER_GROUP: leaflet.featureGroup()
+  MARKER_CLASS: 'travap-place-marker'
 
-  constructor: ($rootscope, $scope, places) ->
-    @_initMap()
+  constructor: ($rootscope, @$scope, @$location, @$compile, places) ->
+    $rootscope.pageTitle = 'Places' # set title attr
+    @_initMap() # init map
+    places.query @_initMarkers.bind(@) # init markers on the map
 
-    # console.log 'map ctrl', places
-    # places.query ->
-    #   console.log 'places done', arguments
   _initMap: ->
-    grayscale = leaflet.tileLayer @TILES_BW, @BASE_TILE_OPTIONS
-    watercolor = leaflet.tileLayer @TILES_WATERCOLOR, @BASE_TILE_OPTIONS
-
     options = @MAP_OPTIONS
-    options.layers = [watercolor, grayscale]
-    @map = leaflet.map 'map', options
+    options.layers = leaflet.tileLayer.grayscale @TILES_WATERCOLOR, @BASE_TILE_OPTIONS
 
-    baseMaps =
-      "Watercolor": watercolor
-      "Grayscale": grayscale
-    leaflet.control.layers(baseMaps, {}).addTo @map
+    @map = leaflet.map 'map', options #create map
+    @MARKER_GROUP.addTo @map # add feature group to map
+
+  _initMarkers: (places) ->
+    # iterater through places and add marker to the map
+    places.forEach (place) =>
+      icon = leaflet.angularIcon
+        className: @MARKER_CLASS
+        element: @_getElement(place)
+
+      leaflet.marker(
+        [place.coordinates.lat, place.coordinates.lng],
+        icon: icon
+      ).addTo(@MARKER_GROUP)
+       .on 'click', =>
+         @$location.path "#{@$location.path()}/#{place.id}"
+         @$scope.$apply()
+
+    @map.fitBounds @MARKER_GROUP.getBounds()
+
+  _getElement: (place) ->
+    compiled = @$compile """
+      <travap-marker
+        name='#{place.name}'
+        amount='#{place.amount}'
+        begin='#{place.begin}'
+        end='#{place.end}'
+        description='#{place.description}'
+      ></travap-marker>
+    """
+
+    return compiled(@$scope)
 
 module.exports = Map

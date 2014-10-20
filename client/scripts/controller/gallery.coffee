@@ -1,5 +1,5 @@
 class Gallery
-  constructor: ($rootscope, $scope, $routeParams, places) ->
+  constructor: ($rootscope, $scope, $routeParams, $location, places) ->
     console.log 'gallery ctrl', $routeParams
     $scope.item = places.get id: $routeParams.id, ->
       console.log 'done gallery', arguments

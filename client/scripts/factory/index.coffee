@@ -1,9 +1,9 @@
-Places = require "./places"
+places = require "./places"
 
-services =
+factories =
   places: [
     '$resource'
-    Places
+    places
   ]
 
-module.exports = services
+module.exports = factories

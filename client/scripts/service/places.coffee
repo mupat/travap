@@ -1,5 +1,4 @@
 places = ($resource) ->
-  res = $resource '/places/:id'
-  return res
+  $resource '/places/:id'
 
 module.exports = places

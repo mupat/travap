@@ -5,6 +5,8 @@ controllers =
   MapCtrl: [
     '$rootScope'
     '$scope'
+    '$location'
+    '$compile'
     'places'
     MapCtrl
   ]
@@ -12,6 +14,7 @@ controllers =
     '$rootScope'
     '$scope'
     '$routeParams'
+    '$location'
     'places'
     GalleryCtrl
   ]
