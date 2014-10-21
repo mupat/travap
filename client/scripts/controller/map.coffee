@@ -24,6 +24,7 @@ class Map
 
     @map = leaflet.map 'map', options #create map
     @MARKER_GROUP.addTo @map # add feature group to map
+    @map.invalidateSize()
 
   _initMarkers: (places) ->
     # iterater through places and add marker to the map

@@ -18,7 +18,9 @@ src =
   templates:
     index: "#{__dirname}/client/index.jade"
     files: "#{__dirname}/client/templates/**/*.jade"
-  styles: "#{__dirname}/client/styles/main.less"
+  styles:
+    index: "#{__dirname}/client/styles/main.less"
+    files: "#{__dirname}/client/styles/**/*.less"
   server: "#{__dirname}/server/index.coffee"
   vendor:
     js: [
@@ -51,7 +53,7 @@ gulp.task 'build:templates', ->
   gTasks.jade.build src.templates.files, dest.templates, true
 
 gulp.task 'build:styles', ->
-  gTasks.less.build src.styles, dest.base
+  gTasks.less.build src.styles.index, dest.base
   gTasks.misc.copy src.vendor.css, dest.vendor.css
 
 gulp.task 'server', ->
@@ -63,6 +65,6 @@ gulp.task 'start', ['build', 'server']
 gulp.task 'watch', ['build', 'server'], ->
   gulp.watch src.scripts.watch, ['build:scripts']
   gulp.watch [src.templates.index, src.templates.files], ['build:templates']
-  gulp.watch src.styles, ['build:styles']
+  gulp.watch [src.styles.index, src.styles.files], ['build:styles']
 
 gulp.task 'default', ['watch']

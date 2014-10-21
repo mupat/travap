@@ -1,6 +1,13 @@
 div
-  h1 marker {{infos.name}}
-  span {{infos.description}}
-  span {{infos.amount}}
-  span {{infos.begin}}
-  span {{infos.end}}
+  header.marker-header
+    h3.marker-name {{infos.name}}
+    div.marker-duration
+      span {{infos.begin}}
+      small -
+      span {{infos.end}}
+  div.marker-content-wrapper
+    section.marker-content
+      p {{infos.description}}
+    footer.marker-footer
+      span Images:
+      strong {{infos.amount}}

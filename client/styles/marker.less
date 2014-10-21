@@ -1,3 +1,72 @@
 .travap-place-marker {
-  background-color: red;
+  width: 200px;
+  box-shadow: 1px -1px 20px 0px @darkgrey;
+  margin-top: -55px;
+  margin-left: -85px;
+  position: relative;
+  background-color: @highlight;
+  color: @white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  .transition(margin 0.5s ease);
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 80px;
+    border-top: solid 10px @highlight;
+    border-right: solid 10px transparent;
+    border-left: solid 10px transparent;
+  }
+
+  .marker-header {
+    text-align: center;
+
+    .marker-name {
+      font-weight: @font-regular;
+      color: @black;
+    }
+
+    .marker-duration {
+      font-size: 14px;
+      margin-bottom: 5px;
+
+      > span {
+        padding: 0px 10px;
+      }
+    }
+  }
+
+  .marker-content-wrapper {
+    overflow: hidden;
+    height: 0;
+    .transition(height 0.5s ease);
+
+    .marker-content {
+      overflow: auto;
+      height: calc(~"100% - 25px");
+      padding: 5px 10px 0 10px;
+      border-top: 1px solid @darkgrey;
+    }
+
+    .marker-footer {
+      height: 25px;
+      text-align: right;
+      padding-right: 5px;
+
+      > strong {
+        color: @black;
+        margin-left: 2px;
+        font-weight: @font-regular;
+      }
+    }
+  }
+
+  &:hover {
+    margin-top: -155px;
+
+    .marker-content-wrapper {
+      height: 100px;
+    }
+  }
 }
