@@ -15,6 +15,7 @@ controllers =
     '$scope'
     '$routeParams'
     '$location'
+    '$interval'
     'places'
     GalleryCtrl
   ]

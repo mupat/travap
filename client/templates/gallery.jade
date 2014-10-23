@@ -1,6 +1,37 @@
-div(
-  data-ng-repeat="image in item.images"
+header.gallery-header
+  span.gallery-back.icon-arrow-back(
+    data-ng-click="back()"
+  )
+  h1.gallery-name Gallery
+    span {{item.name}}
+  div.gallery-duration
+    span {{item.begin}}
+    small -
+    span {{item.end}}
+  span.gallery-play(
+    data-ng-class="{'icon-play': !item.play, 'icon-stop': item.play}"
+    data-ng-click="playStop()"
+  )
+ul.gallery-grid(
+  data-ng-swipe-left="showPrevious()"
+  data-ng-swipe-right="showNext()"
+  data-ng-class="{'fullscreen-active': item.fullscreen > -1}"
 )
-  img(
-    data-ng-src="{{ image }}"
+  li.gallery-grid-item(
+    data-ng-repeat="image in item.images"
+    data-ng-class="{'fullscreen': item.fullscreen == $index}"
+    data-id="{{$index}}"
+  )
+    img(
+      data-ng-src="{{ image }}"
+      data-ng-click="item.fullscreen == $index ? item.fullscreen = -1 : item.fullscreen = $index"
+    )
+section.gallery-nav(
+  data-ng-class="{'visible': item.fullscreen > -1}"
+)
+  span.gallery-nav-back.icon-arrow-left(
+    data-ng-click="showPrevious()"
+  )
+  span.gallery-nav-next.icon-arrow-right(
+    data-ng-click="showNext()"
   )

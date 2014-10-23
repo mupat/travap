@@ -10,6 +10,8 @@ dest =
   vendor:
     js: "#{base}/vendor/js"
     css: "#{base}/vendor/css"
+  assets:
+    "#{base}/assets"
 
 src =
   scripts:
@@ -22,13 +24,17 @@ src =
     index: "#{__dirname}/client/styles/main.less"
     files: "#{__dirname}/client/styles/**/*.less"
   server: "#{__dirname}/server/index.coffee"
+  assets:
+    fonts: "#{__dirname}/client/assets/fonts/**/*.{eot,svg,ttf,woff}"
   vendor:
     js: [
       "#{bower}/angular/angular.min.js"
       "#{bower}/angular-route/angular-route.min.js"
+      "#{bower}/angular-touch/angular-touch.min.js"
       "#{bower}/angular-resource/angular-resource.min.js"
       "#{bower}/angular/angular.min.js.map"
       "#{bower}/angular-route/angular-route.min.js.map"
+      "#{bower}/angular-touch/angular-touch.min.js.map"
       "#{bower}/angular-resource/angular-resource.min.js.map"
       "#{bower}/leaflet/dist/leaflet.js"
       "#{bower}/leaflet-angular-icon/leaflet-angular-icon.min.js"
@@ -42,6 +48,7 @@ gulp.task 'build', [
   'build:scripts'
   'build:templates'
   'build:styles'
+  'build:assets'
 ]
 
 gulp.task 'build:scripts', ->
@@ -55,6 +62,9 @@ gulp.task 'build:templates', ->
 gulp.task 'build:styles', ->
   gTasks.less.build src.styles.index, dest.base
   gTasks.misc.copy src.vendor.css, dest.vendor.css
+
+gulp.task 'build:assets', ->
+  gTasks.misc.copy src.assets.fonts, dest.assets
 
 gulp.task 'server', ->
   gTasks.livereload.livereloadServer dest.base

@@ -7,6 +7,7 @@
     "leaflet-angular-icon": "mupat/leaflet-angular-icon",
     "angular": "~1.2.26",
     "angular-route": "~1.2.26",
-    "angular-resource": "~1.2.26"
+    "angular-resource": "~1.2.26",
+    "angular-touch": "~1.2.26"
   }
 }
