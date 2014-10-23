@@ -15,11 +15,11 @@ Fetch all available places
 ```
 ```json
 {
-  coordinates: "<coordinates>",
-  description: "<description>",
-  amount: <amount>,
-  name: "<name>",
-  id: "<id>"
+  "coordinates": "<coordinates>",
+  "description": "<description>",
+  "amount": <amount>,
+  "name": "<name>",
+  "id": "<id>"
 }
 ```
 
@@ -28,14 +28,14 @@ Fetch one place with all images
 ```
 /places/:id
 ```
-```
+```json
 {
-  coordinates: "<coordinates>",
-  description: "<description>",
-  amount: <amount>,
-  name: "<name>",
-  id: "<id>"
-  images: [<images>]
+  "coordinates": "<coordinates>",
+  "description": "<description>",
+  "amount": <amount>,
+  "name": "<name>",
+  "id": "<id>"
+  "images": [<images>]
 }
 ```
 
