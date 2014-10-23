@@ -40,15 +40,24 @@ Fetch one place with all images
 ```
 
 ## folder structure for places
-sort images in folders and add a `info.json` for describe the place
+sort images in folders and add a `info.json` for describing the place
 
 ### file structure `info.json`
 ```json
 {
-  "coordinates": "",
+  "coordinates": {
+    "lat": <lat>,
+    "lng": <lng>
+  },
   "description": "",
   "begin": "",
   "end": ""
+}
+```
+OPTIONAL
+```json
+{
+  "name": ""
 }
 ```
 
