@@ -34,7 +34,7 @@ Fetch one place with all images
   "description": "<description>",
   "amount": <amount>,
   "name": "<name>",
-  "id": "<id>"
+  "id": "<id>",
   "images": [<images>]
 }
 ```
