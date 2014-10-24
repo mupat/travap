@@ -1,6 +1,6 @@
 #gallery {
   background-color: @black;
-  color: @white;
+  color: @black;
   overflow: hidden;
 
   .gallery-header {
@@ -9,14 +9,15 @@
     left: 0;
     width: 100%;
     line-height: 50px;
-    background-color: @black;
+    background-color: @white;
     height: 50px;
     z-index: 2;
+    box-shadow: 0 0px 5px 0px fade(@black, 50);
 
     .gallery-back,
     .gallery-play {
       position: absolute;
-      top: 5px;
+      top: 3px;
       font-size: 30px;
       width: 30px;
       cursor: pointer;
@@ -55,7 +56,7 @@
       font-size: 14px;
       width: 175px;
       text-align: center;
-      top: 5px;
+      top: 2px;
 
       > span {
         padding: 0 5px;
@@ -78,7 +79,7 @@
       width: 30%;
       text-align: center;      
       display: inline-block;
-      margin-bottom: 20px;
+      margin-top: 20px;
       margin-right: 20px;
       vertical-align: middle;
       background-color: transparent;
@@ -87,11 +88,9 @@
       left: 0;
       z-index: 1;
 
-      // .transition(
-      //   background-color 0.3s ease,
-      //   left 5s ease 0.3s,
-      //   top 5s ease 0.3s
-      // ;);
+      &:last-child {
+        margin-bottom: 20px;
+      }
 
       &:nth-child(3n) {
         margin-right: 0;
@@ -101,18 +100,19 @@
         height: 200px;
         .transition(box-shadow 0.5s ease);
         cursor: pointer;
+        box-shadow: 0 0px 5px 0px @white;
       }
 
       &:not(.fullscreen) > img:hover {
-        box-shadow: 0 0 10px 2px @highlight;
+        box-shadow: 0 0px 5px 0px @highlight;
       }
 
       &.fullscreen {
         position: absolute;
-        top: 0;
+        top: -20px;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: calc(~"100% + 20px");
         background-color: fade(@black, 75);
         z-index: 2;
 

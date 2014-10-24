@@ -1,3 +1,5 @@
+window.document.addEventListener "touchstart", ->, true
+
 angular = require 'angular'
 controllers = require "./controller"
 factories = require "./factory"

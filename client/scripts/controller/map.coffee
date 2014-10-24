@@ -20,7 +20,7 @@ class Map
 
   _initMap: ->
     options = @MAP_OPTIONS
-    options.layers = leaflet.tileLayer.grayscale @TILES_WATERCOLOR, @BASE_TILE_OPTIONS
+    options.layers = leaflet.tileLayer @TILES_WATERCOLOR, @BASE_TILE_OPTIONS
 
     @map = leaflet.map 'map', options #create map
     @MARKER_GROUP.addTo @map # add feature group to map
