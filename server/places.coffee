@@ -1,5 +1,6 @@
 fs = require 'fs'
 async = require 'async'
+exif = require('exiftool.js')
 
 class Places
   constructor: (@baseDirectory) ->
@@ -8,20 +9,45 @@ class Places
     fs.readdir "#{@baseDirectory}/#{name}", (err, files) =>
       return done err if err
 
-      images = []
-      for file in files
-        images.push "#{host}/images/#{name}/#{file}" if file[-4..] isnt 'json'
+      async.map files, 
+        @_getOneImage.bind(@, "#{@baseDirectory}/#{name}", "#{host}/images/#{name}"), 
+        (err, images) =>
+          return done err if err
+          @_readPlace name, (err, infos) ->
+            return done err if err
+            infos.images = images
+            done null, infos
 
-      @_readPlace name, (err, infos) ->
-        return done err if err
-        infos.images = images
-        done null, infos
 
+
+      # images = []
+      # for file in files
+      #   continue if file[-4..] is 'json'
+      #   exif.getExifFromLocalFileUsingNodeFs fs, "#{@baseDirectory}/#{name}/#{file}", (obj) ->
+      #     console.log 'done', obj
+
+      #   images.push {
+      #     href: "#{host}/images/#{name}/#{file}"
+      #   }
+
+      
   getAllInfos: (done) ->
     async.waterfall [
       @_readBaseDirectory.bind(@)
       @_readPlaces.bind(@)
     ], done
+
+  _getOneImage: (path, uri, img, done) ->
+    return done null, {} if img[-4..] is 'json'
+    exif.getExifFromLocalFileUsingNodeFs fs, "#{path}/#{img}", (info) ->
+      console.log 'infos', info
+      done null, {
+        date: info.CreateDate
+        model: info.Model
+        height: info.ExifImageHeight
+        width: info.ExifImageWidth
+        href: "#{uri}/#{img}"
+      }
 
   _readBaseDirectory: (done) ->
     fs.readdir @baseDirectory, done
