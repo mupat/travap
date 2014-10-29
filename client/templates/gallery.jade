@@ -26,11 +26,8 @@ ul.gallery-grid(
       data-ng-src="{{ image.href }}"
       data-ng-click="item.fullscreen == $index ? item.fullscreen = -1 : item.fullscreen = $index"
     )
-    span.gallery-grid-item-infos
-      | model: {{ image.model }}
-      | date: {{ image.date }}
-      | height: {{ image.height }}
-      | width: {{ image.width }}
+    small.gallery-grid-item-infos {{ image.model }}
+    small.gallery-grid-item-infos {{ image.date | date: 'yyyy-MM-dd' }}
 section.gallery-nav(
   data-ng-class="{'visible': item.fullscreen > -1}"
 )

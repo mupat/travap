@@ -26,7 +26,7 @@ class Router
     @_directoryExists (err) =>
       return next err if err
 
-      @places.getAllInfos (err, places) ->
+      @places.getAll (err, places) ->
         return next err if err
         res.json places
 
@@ -36,7 +36,7 @@ class Router
       return next err if err
 
       host = "http://#{req.headers['host']}"
-      @places.getAllImages name, host, (err, images) ->
+      @places.getOne name, host, (err, images) ->
         return next err if err
         res.json images
 
