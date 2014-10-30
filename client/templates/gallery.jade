@@ -2,38 +2,56 @@ header.gallery-header
   span.gallery-back.icon-arrow-back(
     data-ng-click="back()"
   )
-  h1.gallery-name Gallery
+
+  h1.gallery-name
     span {{item.name}}
+
   div.gallery-duration
     span {{item.begin}}
     small -
     span {{item.end}}
+
+  section.gallery-nav(
+    data-ng-class="{'visible': item.fullscreen > -1}"
+  )
+    span.gallery-nav-back.icon-arrow-left(
+      data-ng-click="showPrevious()"
+    )
+    span.gallery-nav-next.icon-arrow-right(
+      data-ng-click="showNext()"
+    )
+
   span.gallery-play(
     data-ng-class="{'icon-play': !item.play, 'icon-stop': item.play}"
     data-ng-click="playStop()"
   )
+
+
 ul.gallery-grid(
   data-ng-swipe-left="showPrevious()"
   data-ng-swipe-right="showNext()"
-  data-ng-class="{'fullscreen-active': item.fullscreen > -1}"
 )
   li.gallery-grid-item(
     data-ng-repeat="image in item.images"
-    data-ng-class="{'fullscreen': item.fullscreen == $index}"
-    data-id="{{$index}}"
+    data-ng-attr-id="image-{{$index}}"
   )
     img.gallery-grid-item-image(
       data-ng-src="{{ image.href }}"
-      data-ng-click="item.fullscreen == $index ? item.fullscreen = -1 : item.fullscreen = $index"
+      data-ng-click="fullscreen($index)"
     )
-    small.gallery-grid-item-infos {{ image.model }}
-    small.gallery-grid-item-infos {{ image.date | date: 'yyyy-MM-dd' }}
-section.gallery-nav(
+    div.gallery-grid-item-infos(
+      data-ng-click="image.infosExpand = !image.infosExpand"
+      data-ng-class="{'extend': image.infosExpand}"
+    )
+      p.gallery-grid-item-date {{ image.date }}
+        small.gallery-grid-item-time {{ image.time }}
+      p.gallery-grid-item-model {{ image.model }}
+
+
+div.gallery-view(
   data-ng-class="{'visible': item.fullscreen > -1}"
+  data-ng-click="item.fullscreen = -1"
 )
-  span.gallery-nav-back.icon-arrow-left(
-    data-ng-click="showPrevious()"
-  )
-  span.gallery-nav-next.icon-arrow-right(
-    data-ng-click="showNext()"
+  img.gallery-view-image(
+    data-ng-src="{{ item.images[item.fullscreen].href }}"
   )

@@ -24,4 +24,5 @@ html(
   body(
     data-ng-view
     data-ng-attr-id="{{ pageTitle == 'Places' ? 'map' : 'gallery' }}"
+    data-ng-class="{'fullscreen-active': item.fullscreen > -1}"
   )

@@ -1,17 +1,19 @@
 .travap-place-marker {
   width: 200px;
-  margin-top: -55px;
-  margin-left: -85px;
+  margin-top: -50px;
+  margin-left: -100px;
   position: relative;
-  background-color: @black;
-  color: @white;
+  background-color: @white;
+  color: @black;
+  box-shadow: 0 0 5px 0px fade(@black, 50);
+  border-radius: 5px;
 
   &:after {
     content: "";
     position: absolute;
     bottom: -10px;
     left: 90px;
-    border-top: solid 10px @black;
+    border-top: solid 10px @white;
     border-right: solid 10px transparent;
     border-left: solid 10px transparent;
   }
@@ -40,8 +42,8 @@
     top: -10px;
     display: inline-block;
     position: absolute;
-    background-color: @highlight;
-    color: @black;
+    background-color: @white;
+    color: @highlight;
     padding: 0px 5px;
     border-radius: 50%;
     font-weight: @font-regular;

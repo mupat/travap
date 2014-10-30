@@ -1,0 +1,55 @@
+// variables
+// @white: #FEF7DA;
+@white: #F9FFFF;
+@highlight: #8B9D17;
+@highlight-dark: #426352;
+@black: #161417;
+// @darkgrey: rgba(50, 50, 50, 0.5);
+
+@font-light: 100;
+@font-regular: 400;
+
+@height-topbar: 50px;
+
+// mixins
+.transition (@transition) {
+  -webkit-transition: @transition;
+  -moz-transition:    @transition;
+  -ms-transition:     @transition;
+  -o-transition:      @transition;
+  transition:         @transition;
+}
+
+.columns(@number) {
+  -webkit-column-count: @number;  
+  -moz-column-count:    @number;  
+  column-count:         @number;
+  
+}
+
+.columns-gap (@amount) {
+  -webkit-column-gap:   @amount;
+  -moz-column-gap:      @amount;
+  column-gap:           @amount;
+}
+
+.border-box () {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.transitionColor (@time) {
+  .transition(color @time ease);
+}
+
+.transitionVisibility (@time) {
+  opacity: 0;
+  visibility: hidden;
+  .transition(opacity @time ease, visibility @time ease;);
+}
+
+.visible () {
+  opacity: 1;
+  visibility: visible;
+}

@@ -1,31 +1,7 @@
 @charset "UTF-8";
 
-@import url(http://fonts.googleapis.com/css?family=Lato:100,400);
+@import "base.less";
 @import "font.less";
-
-// @white: #FEF7DA;
-@white: #FFFFFF;
-@highlight: #DF6209;
-@highlight-dark: #011931;
-@black: #231F20;
-@darkgrey: rgba(50, 50, 50, 0.5);
-
-@font-light: 100;
-@font-regular: 400;
-
-.transition (@transition) {
-  -webkit-transition: @transition;
-  -moz-transition:    @transition;
-  -ms-transition:     @transition;
-  -o-transition:      @transition;
-  transition:         @transition;
-}
-
-.border-box () {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
 
 *, *:before, *:after {
   .border-box();

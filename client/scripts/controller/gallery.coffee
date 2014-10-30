@@ -38,4 +38,15 @@ class Gallery
       $scope.item.fullscreen = $scope.lastPlayItem || 0
       $scope.item.play = $interval ( -> $scope.showNext() ), 2000
 
+    $scope.fullscreen = (index) ->
+      image = window.document.getElementById('image-' + index)
+      view = window.document.querySelector('.gallery-view')
+
+      view.style.top = "#{image.offsetTop}px"
+      view.style.left = "#{image.offsetLeft}px"
+      view.style.width = "#{image.offsetWidth}px"
+      view.style.height = "#{image.offsetHeight}px"
+
+      $scope.item.fullscreen = index
+
 module.exports = Gallery

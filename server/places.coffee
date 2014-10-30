@@ -31,7 +31,8 @@ class Places
     exif.getExifFromLocalFileUsingNodeFs fs, "#{path}/#{img}", (info) ->
       splittedDate = info.CreateDate.split ' '
       done null, {
-        date: "#{splittedDate[0].replace(/:/g, '-')} #{splittedDate[1]}"
+        date: splittedDate[0].replace(/:/g, '-')
+        time: splittedDate[1]
         model: info.Model
         href: "#{uri}/#{img}"
       }
