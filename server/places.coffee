@@ -21,7 +21,8 @@ class Places
   _readImages: (name, host, files, done) ->
     images = []
     for file in files # remove json file
-      images.push file unless file[-4..] is 'json'
+      unless file[-4..] is 'json' or file[0..0] is '.'
+        images.push file 
 
     async.map images, 
       @_readImage.bind(@, "#{@baseDirectory}/#{name}", "#{host}/images/#{name}"), 
@@ -29,7 +30,8 @@ class Places
 
   _readImage: (path, uri, img, done) ->
     exif.getExifFromLocalFileUsingNodeFs fs, "#{path}/#{img}", (info) ->
-      splittedDate = info.CreateDate.split ' '
+      date = info.CreateDate or info.ModifyDate or ' '
+      splittedDate = date.split ' '
       done null, {
         date: splittedDate[0].replace(/:/g, '-')
         time: splittedDate[1]
@@ -41,7 +43,11 @@ class Places
     fs.readdir @baseDirectory + path, done
 
   _readPlaces: (directories, done) ->
-    async.map directories, @_readPlace.bind(@), done 
+    folders = []
+    for directory in directories # remove json file
+      unless directory[0..0] is '.'
+        folders.push directory 
+    async.map folders, @_readPlace.bind(@), done 
 
   _readPlace: (directory, images, done) ->
     path = "#{@baseDirectory}/#{directory}"

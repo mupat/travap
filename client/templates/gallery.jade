@@ -27,10 +27,7 @@ header.gallery-header
   )
 
 
-ul.gallery-grid(
-  data-ng-swipe-left="showPrevious()"
-  data-ng-swipe-right="showNext()"
-)
+ul.gallery-grid
   li.gallery-grid-item(
     data-ng-repeat="image in item.images"
     data-ng-attr-id="image-{{$index}}"
@@ -40,6 +37,7 @@ ul.gallery-grid(
       data-ng-click="open($index)"
     )
     div.gallery-grid-item-infos(
+      data-ng-if="image.date"
       data-ng-click="image.infosExpand = !image.infosExpand"
       data-ng-class="{'extend': image.infosExpand}"
     )
@@ -51,6 +49,8 @@ ul.gallery-grid(
 div.gallery-view(
   data-ng-class="{'visible': item.open > -1}"
   data-ng-click="close()"
+  data-ng-swipe-left="showPrevious()"
+  data-ng-swipe-right="showNext()"
 )
   img.gallery-view-image(
     data-ng-src="{{ item.openImg.href }}"
