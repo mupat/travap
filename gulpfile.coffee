@@ -26,6 +26,7 @@ src =
   server: "#{__dirname}/server/index.coffee"
   assets:
     fonts: "#{__dirname}/client/assets/fonts/**/*.{eot,svg,ttf,woff}"
+    images: "#{__dirname}/client/assets/images/**/*.{gif,jpg,jpeg,png,ico}"
   vendor:
     js: [
       "#{bower}/angular/angular.min.js"
@@ -50,8 +51,15 @@ gulp.task 'build', [
   'build:assets'
 ]
 
-gulp.task 'build:scripts', ->
+gulp.task 'build:scripts', [
+  'build:scripts:app'
+  'build:scripts:vendor'
+]
+
+gulp.task 'build:scripts:app', ->
   gTasks.browserify.build src.scripts.main, dest.base
+  
+gulp.task 'build:scripts:vendor', ->
   gTasks.misc.copy src.vendor.js, dest.vendor.js
 
 gulp.task 'build:templates', ->
@@ -64,6 +72,7 @@ gulp.task 'build:styles', ->
 
 gulp.task 'build:assets', ->
   gTasks.misc.copy src.assets.fonts, dest.assets
+  gTasks.misc.copy src.assets.images, dest.assets
 
 gulp.task 'server', ->
   gTasks.livereload.livereloadServer dest.base
@@ -72,7 +81,7 @@ gulp.task 'server', ->
 gulp.task 'start', ['build', 'server']
 
 gulp.task 'watch', ['build', 'server'], ->
-  gulp.watch src.scripts.watch, ['build:scripts']
+  gulp.watch src.scripts.watch, ['build:scripts:app']
   gulp.watch [src.templates.index, src.templates.files], ['build:templates']
   gulp.watch [src.styles.index, src.styles.files], ['build:styles']
 

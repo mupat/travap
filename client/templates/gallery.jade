@@ -4,12 +4,12 @@ header.gallery-header
   )
 
   h1.gallery-name
-    span {{item.name}}
+    span {{place.name}}
 
   div.gallery-duration
-    span {{item.begin}}
+    span {{place.begin}}
     small -
-    span {{item.end}}
+    span {{place.end}}
 
   section.gallery-nav(
     data-ng-class="{'visible': item.open > -1}"
@@ -26,15 +26,22 @@ header.gallery-header
     data-ng-click="playStop()"
   )
 
+div.gallery-loader(
+  data-ng-class="{'visible': !item.loaded}"
+)
 
-ul.gallery-grid
+ul.gallery-grid(
+  data-ng-class="{'visible': item.loaded}"
+)
   li.gallery-grid-item(
-    data-ng-repeat="image in item.images"
+    data-ng-repeat="image in place.images"
     data-ng-attr-id="image-{{$index}}"
   )
     img.gallery-grid-item-image(
       data-ng-src="{{ image.href }}"
       data-ng-click="open($index)"
+      data-travap-imageonload="onLoad($index)"
+      data-ng-class="{'animate': image.loaded}"
     )
     div.gallery-grid-item-infos(
       data-ng-if="image.date"

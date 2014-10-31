@@ -7,19 +7,24 @@ class Gallery
   DEFAULT: 
     open: -1
     play: undefined
-    lastPlayItem: -1
+    lastPlayItem: undefined
     openImg: ''
+    loaded: false
 
   constructor: (@$rootscope, @$scope, $routeParams, @$location, @$interval, @$timeout, @places) ->
-    @view = document.querySelector '.gallery-view'
-
+    @_reset()
     @_initScope()
     @_init $routeParams.id    
 
   _init: (place) ->
-    @$scope.item = @places.get id: place, =>
-      angular.extend @$scope.item, @DEFAULT      
+    @$scope.place = @places.get id: place, =>
       @$rootscope.pageTitle = "Place - #{@$scope.item.name}" # set title attr
+
+  _reset: ->
+    @view = document.querySelector '.gallery-view'
+    @imagesLoaded = 0
+    @$scope.item = @DEFAULT
+    @$scope.place = {}
 
   _initScope: ->
     @$scope.back = @_back.bind @
@@ -28,15 +33,21 @@ class Gallery
     @$scope.playStop = @_playStop.bind @
     @$scope.open = @_open.bind @
     @$scope.close = @_close.bind @
+    @$scope.onLoad = @_onload.bind @
+
+  _onload: (index) =>
+    @imagesLoaded++
+    @$scope.item.loaded = true if @imagesLoaded is @$scope.place.images.length
 
   _back: ->
     @$location.path "/places" # for going back to map, change location
 
   _move: (direction) ->
     item = @$scope.item
+    place = @$scope.place
     return if item.open is -1 
 
-    length = item.images.length - 1
+    length = place.images.length - 1
     start = 0
 
     if direction is 'next'
@@ -46,23 +57,25 @@ class Gallery
       newIndex = if item.open is start then length else item.open -= 1
 
     item.open = newIndex
-    @$scope.item.openImg = @$scope.item.images[@$scope.item.open]
+    item.openImg = place.images[item.open]
     @_addPosition item.open
 
   _playStop: ->
-    if $scope.item.play?
-      $interval.cancel $scope.item.play
-      $scope.lastPlayItem = $scope.item.fullscreen
-      $scope.item.play = undefined
-      $scope.item.fullscreen = -1
+    item = @$scope.item
+    if item.play?
+      @$interval.cancel item.play
+      item.lastPlayItem = item.open
+      item.play = undefined
+      @$scope.close()
       return
 
-    $scope.item.fullscreen = $scope.lastPlayItem || 0
-    $scope.item.play = $interval ( -> $scope.showNext() ), 2000
+    # item.open = item.lastPlayItem or 0
+    @$scope.open item.lastPlayItem || 0
+    item.play = @$interval ( => @$scope.showNext() ), 2000
 
   _open: (index) ->
     # add image to fullscreen layer
-    @$scope.item.openImg = @$scope.item.images[index]
+    @$scope.item.openImg = @$scope.place.images[index]
     @_addPosition index
 
     show = ->

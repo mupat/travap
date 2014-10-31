@@ -1,5 +1,5 @@
 #gallery {
-  background-color: @black;
+  background-color: @white;
   color: @black;
 
   &.fullscreen-active {
@@ -15,6 +15,8 @@
     width: 100%;
     position: relative;
     line-height: 0;
+    top: 100%;
+    .transition(top 1s ease);
    
     .columns(3);
     .columns-gap(0px);
@@ -22,9 +24,28 @@
     .gallery-grid-item {
       @import "gallery/grid_item.less";
     }
+
+    &.visible {
+      top: 0;
+    }
   }
 
   .gallery-view {
     @import "gallery/single.less";
+  }
+
+  .gallery-loader {
+    background-image: url("/assets/loader.gif");
+    width: 128px;
+    height: 128px;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    z-index: 3;
+    .transitionVisibility(0.3s);
+    
+    &.visible {
+      .visible();
+    }
   }
 }
