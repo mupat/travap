@@ -12,7 +12,7 @@ header.gallery-header
     span {{item.end}}
 
   section.gallery-nav(
-    data-ng-class="{'visible': item.fullscreen > -1}"
+    data-ng-class="{'visible': item.open > -1}"
   )
     span.gallery-nav-back.icon-arrow-left(
       data-ng-click="showPrevious()"
@@ -37,7 +37,7 @@ ul.gallery-grid(
   )
     img.gallery-grid-item-image(
       data-ng-src="{{ image.href }}"
-      data-ng-click="fullscreen($index)"
+      data-ng-click="open($index)"
     )
     div.gallery-grid-item-infos(
       data-ng-click="image.infosExpand = !image.infosExpand"
@@ -49,9 +49,9 @@ ul.gallery-grid(
 
 
 div.gallery-view(
-  data-ng-class="{'visible': item.fullscreen > -1}"
-  data-ng-click="item.fullscreen = -1"
+  data-ng-class="{'visible': item.open > -1}"
+  data-ng-click="close()"
 )
   img.gallery-view-image(
-    data-ng-src="{{ item.images[item.fullscreen].href }}"
+    data-ng-src="{{ item.openImg.href }}"
   )

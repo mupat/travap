@@ -1,52 +1,96 @@
+document = window.document
+angular = require 'angular'
+
 class Gallery
-  constructor: ($rootscope, $scope, $routeParams, $location, $interval, places) ->
-    place = $routeParams.id
-    $scope.item = places.get id: place, ->
-      $scope.item.fullscreen = -1
+  CSS_TRANSITION: 'transition'
+  CSS_TRANSITION_TIME: 300
+  DEFAULT: 
+    open: -1
+    play: undefined
+    lastPlayItem: -1
+    openImg: ''
+
+  constructor: (@$rootscope, @$scope, $routeParams, @$location, @$interval, @$timeout, @places) ->
+    @view = document.querySelector '.gallery-view'
+
+    @_initScope()
+    @_init $routeParams.id    
+
+  _init: (place) ->
+    @$scope.item = @places.get id: place, =>
+      angular.extend @$scope.item, @DEFAULT      
+      @$rootscope.pageTitle = "Place - #{@$scope.item.name}" # set title attr
+
+  _initScope: ->
+    @$scope.back = @_back.bind @
+    @$scope.showPrevious = @_move.bind @, 'prev'
+    @$scope.showNext = @_move.bind @, 'next'
+    @$scope.playStop = @_playStop.bind @
+    @$scope.open = @_open.bind @
+    @$scope.close = @_close.bind @
+
+  _back: ->
+    @$location.path "/places" # for going back to map, change location
+
+  _move: (direction) ->
+    item = @$scope.item
+    return if item.open is -1 
+
+    length = item.images.length - 1
+    start = 0
+
+    if direction is 'next'
+      newIndex = if item.open is length then start else item.open += 1
+
+    if direction is 'prev'
+      newIndex = if item.open is start then length else item.open -= 1
+
+    item.open = newIndex
+    @$scope.item.openImg = @$scope.item.images[@$scope.item.open]
+    @_addPosition item.open
+
+  _playStop: ->
+    if $scope.item.play?
+      $interval.cancel $scope.item.play
+      $scope.lastPlayItem = $scope.item.fullscreen
       $scope.item.play = undefined
-      $scope.item.lastPlayItem = -1
-      $rootscope.pageTitle = "Place - #{$scope.item.name}" # set title attr
+      $scope.item.fullscreen = -1
+      return
 
-    $scope.back = ->
-      $location.path "/places"
+    $scope.item.fullscreen = $scope.lastPlayItem || 0
+    $scope.item.play = $interval ( -> $scope.showNext() ), 2000
 
-    $scope.showPrevious = ->
-      return if $scope.item.fullscreen is -1
+  _open: (index) ->
+    # add image to fullscreen layer
+    @$scope.item.openImg = @$scope.item.images[index]
+    @_addPosition index
 
-      if $scope.item.fullscreen is 0
-        $scope.item.fullscreen = $scope.item.images.length - 1
-      else
-        $scope.item.fullscreen--
+    show = ->
+      @view.classList.add @CSS_TRANSITION
+      @$scope.item.open = index
 
-    $scope.showNext = ->
-      console.log 'next'
-      return if $scope.item.fullscreen is -1
+    @$timeout show.bind(@), @CSS_TRANSITION_TIME
 
-      if $scope.item.fullscreen is $scope.item.images.length - 1
-        $scope.item.fullscreen = 0
-      else
-        $scope.item.fullscreen++
+  _close: ->
+    @$scope.item.open = -1
 
-    $scope.playStop = ->
-      if $scope.item.play?
-        $interval.cancel $scope.item.play
-        $scope.lastPlayItem = $scope.item.fullscreen
-        $scope.item.play = undefined
-        $scope.item.fullscreen = -1
-        return
+    remove = ->
+      @view.classList.remove @CSS_TRANSITION
+      @view.style.top = ""
+      @view.style.left = ""
+      @view.style.width = ""
+      @view.style.height = ""
 
-      $scope.item.fullscreen = $scope.lastPlayItem || 0
-      $scope.item.play = $interval ( -> $scope.showNext() ), 2000
+    @$timeout remove.bind(@), @CSS_TRANSITION_TIME
 
-    $scope.fullscreen = (index) ->
-      image = window.document.getElementById('image-' + index)
-      view = window.document.querySelector('.gallery-view')
+  _addPosition: (index) ->
+    image = document.getElementById 'image-' + index #get actual image
+    rect = image.getBoundingClientRect() # get bound box of image
 
-      view.style.top = "#{image.offsetTop}px"
-      view.style.left = "#{image.offsetLeft}px"
-      view.style.width = "#{image.offsetWidth}px"
-      view.style.height = "#{image.offsetHeight}px"
-
-      $scope.item.fullscreen = index
+    # set style according to the image
+    @view.style.top = "#{rect.top}px"
+    @view.style.left = "#{rect.left}px"
+    @view.style.width = "#{image.offsetWidth}px"
+    @view.style.height = "#{image.offsetHeight}px"
 
 module.exports = Gallery

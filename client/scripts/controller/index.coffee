@@ -16,6 +16,7 @@ controllers =
     '$routeParams'
     '$location'
     '$interval'
+    '$timeout'
     'places'
     GalleryCtrl
   ]

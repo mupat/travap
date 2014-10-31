@@ -4,13 +4,14 @@ height: 0;
 top: @height-topbar;
 left: 0;
 background-color: fade(@black, 75);
-opacity: 0;
-visibility: hidden;
-.transition(
-  height 0.3s ease, 
-  width 0.3s ease,
-  opacity 0.3s ease 0.3s,
-  visibility 0.3s ease 0.3s;);
+
+&.transition{
+  .transition(
+    height 0.3s ease, 
+    width 0.3s ease,
+    left 0.3s ease ,
+    top 0.3s ease;);
+}
 
 .gallery-view-image {
   width: 100%;
@@ -23,8 +24,6 @@ visibility: hidden;
 }
 
 &.visible {
-  opacity: 1;
-  visibility: visible;
   width: 100% !important;
   height: calc(~"100% - @{height-topbar}") !important;
   top: @height-topbar !important;
