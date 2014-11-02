@@ -38,6 +38,11 @@ class Gallery
     @$scope.onLoad = @_onload.bind @
     @$scope.toggleFullscreen = @_toggleFullscreen.bind @
 
+    # listen for changes and apply them to the scope
+    document.addEventListener screenfull.raw.fullscreenchange, =>
+      @$scope.$apply =>
+        @$scope.item.fullscreen = screenfull.isFullscreen
+
    _toggleFullscreen: ->
       screenfull.toggle();
       @$scope.item.fullscreen = !@$scope.item.fullscreen 
