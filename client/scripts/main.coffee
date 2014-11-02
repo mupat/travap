@@ -8,6 +8,7 @@ travap = angular.module 'travap', [
   'ngRoute'
   'ngResource'
   'ngTouch'
+  'akoenig.deckgrid'
 ]
 
 #add factories

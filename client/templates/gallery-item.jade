@@ -1,0 +1,17 @@
+img.gallery-grid-item-image(
+  data-ng-attr-id="image-{{card.$index}}"
+  data-travap-src="{{ card.href }}"
+  src=""
+  data-ng-click="mother.open(card.$index)"
+  data-travap-imageonload="mother.onLoad(card.$index)"
+  data-travap-orientation="{{ card.orientation }}"
+  data-ng-class="{'animate': card.loaded}"
+)
+div.gallery-grid-item-infos(
+  data-ng-if="card.date"
+  data-ng-click="card.infosExpand = !card.infosExpand"
+  data-ng-class="{'extend': card.infosExpand}"
+)
+  p.gallery-grid-item-date {{ card.date }}
+    small.gallery-grid-item-time {{ card.time }}
+  p.gallery-grid-item-model {{ card.model }}

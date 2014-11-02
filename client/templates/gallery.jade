@@ -1,6 +1,13 @@
-header.gallery-header
+header.gallery-header(
+  data-ng-class="{'fullscreen': item.fullscreen}"
+)
   span.gallery-back.icon-arrow-back(
     data-ng-click="back()"
+    data-ng-hide="item.open > -1"
+  )
+  span.gallery-item-close.icon-close(
+    data-ng-click="close()"
+    data-ng-show="item.open > -1"
   )
 
   h1.gallery-name
@@ -25,33 +32,21 @@ header.gallery-header
     data-ng-class="{'icon-play': !item.play, 'icon-stop': item.play}"
     data-ng-click="playStop()"
   )
+  span.gallery-fullscreen(
+    data-ng-class="{'icon-fullscreen-open': !item.fullscreen, 'icon-fullscreen-close': item.fullscreen}"
+    data-ng-click="toggleFullscreen()"
+  )
 
 div.gallery-loader(
   data-ng-class="{'visible': !item.loaded}"
 )
 
-ul.gallery-grid(
+div.gallery-grid(
   data-ng-class="{'visible': item.loaded}"
+  deckgrid 
+  source="place.images"
+  cardTemplate="templates/gallery-item.html"
 )
-  li.gallery-grid-item(
-    data-ng-repeat="image in place.images"
-    data-ng-attr-id="image-{{$index}}"
-  )
-    img.gallery-grid-item-image(
-      data-ng-src="{{ image.href }}"
-      data-ng-click="open($index)"
-      data-travap-imageonload="onLoad($index)"
-      data-ng-class="{'animate': image.loaded}"
-    )
-    div.gallery-grid-item-infos(
-      data-ng-if="image.date"
-      data-ng-click="image.infosExpand = !image.infosExpand"
-      data-ng-class="{'extend': image.infosExpand}"
-    )
-      p.gallery-grid-item-date {{ image.date }}
-        small.gallery-grid-item-time {{ image.time }}
-      p.gallery-grid-item-model {{ image.model }}
-
 
 div.gallery-view(
   data-ng-class="{'visible': item.open > -1}"
@@ -60,5 +55,5 @@ div.gallery-view(
   data-ng-swipe-right="showNext()"
 )
   img.gallery-view-image(
-    data-ng-src="{{ item.openImg.href }}"
+    data-ng-src="{{ item.openImg }}"
   )

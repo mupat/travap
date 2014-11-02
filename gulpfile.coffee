@@ -33,12 +33,14 @@ src =
       "#{bower}/angular-route/angular-route.min.js"
       "#{bower}/angular-touch/angular-touch.min.js"
       "#{bower}/angular-resource/angular-resource.min.js"
+      "#{bower}/angular-deckgrid/angular-deckgrid.js"
       "#{bower}/angular/angular.min.js.map"
       "#{bower}/angular-route/angular-route.min.js.map"
       "#{bower}/angular-touch/angular-touch.min.js.map"
       "#{bower}/angular-resource/angular-resource.min.js.map"
       "#{bower}/leaflet/dist/leaflet.js"
       "#{bower}/leaflet-angular-icon/leaflet-angular-icon.min.js"
+      "#{bower}/screenfull/dist/screenfull.min.js"
     ]
     css: [
       "#{bower}/leaflet/dist/leaflet.css"

@@ -17,6 +17,22 @@
   transition:         @transition;
 }
 
+.scale (@number) {
+  -webkit-transform: scale(@number);
+  -moz-transform: scale(@number);
+  -ms-transform: scale(@number);
+  -o-transform: scale(@number);
+  transform: scale(@number);
+}
+
+.grayscale (@number) {
+  -webkit-filter: grayscale(@number);
+  -moz-filter: grayscale(@number);
+  -ms-filter: grayscale(@number);
+  -o-filter: grayscale(@number);
+  filter: grayscale(@number);
+}
+
 .columns(@number) {
   -webkit-column-count: @number;  
   -moz-column-count:    @number;  
