@@ -19,7 +19,7 @@ header.gallery-header(
     span {{place.end}}
 
   section.gallery-nav(
-    data-ng-class="{'visible': item.open > -1}"
+    data-ng-class="{'visible': item.open > -1 && !item.play}"
   )
     span.gallery-nav-back.icon-arrow-left(
       data-ng-click="showPrevious()"
@@ -31,7 +31,16 @@ header.gallery-header(
   span.gallery-play(
     data-ng-class="{'icon-play': !item.play, 'icon-stop': item.play}"
     data-ng-click="playStop()"
+  ) 
+  div.gallery-play-intervals(
+    data-ng-class="{'visible': item.play}"
   )
+    span.icon-repeat.gallery-play-interval(
+      data-ng-repeat="interval in item.intervals"
+      data-ng-click="item.interval = interval"
+      data-ng-class="{'active': interval == item.interval}"
+    )
+      small.gallery-play-interval-value {{ interval }}
   span.gallery-fullscreen(
     data-ng-class="{'icon-fullscreen-open': !item.fullscreen, 'icon-fullscreen-close': item.fullscreen}"
     data-ng-click="toggleFullscreen()"

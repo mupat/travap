@@ -12,6 +12,8 @@ class Gallery
     loaded: false
     limit: 10000
     fullscreen: false
+    intervals: [2, 3, 5]
+    interval: 2
 
   constructor: (@$rootscope, @$scope, $routeParams, @$location, @$interval, @$timeout, @places) ->
     @_reset()
@@ -88,7 +90,7 @@ class Gallery
 
     # item.open = item.lastPlayItem or 0
     @$scope.open item.lastPlayItem || 0
-    item.play = @$interval ( => @$scope.showNext() ), 2000
+    item.play = @$interval ( => @$scope.showNext() ), @$scope.item.interval * 1000
 
   _open: (index) ->
     image = document.getElementById 'image-' + index #get actual image

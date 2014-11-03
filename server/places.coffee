@@ -32,7 +32,6 @@ class Places
     exif.getExifFromLocalFileUsingNodeFs fs, "#{path}/#{img}", (info) ->
       date = info.CreateDate or info.ModifyDate or ' '
       splittedDate = date.split ' '
-      console.log 'sfasdfsdf', info
       done null, {
         date: splittedDate[0].replace(/:/g, '-')
         time: splittedDate[1]
