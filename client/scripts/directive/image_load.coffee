@@ -1,7 +1,7 @@
 exifRotate = require 'exif-rotate'
 
 link = (scope, el, attrs) ->
-  rotate attrs.$$element[0], attrs.travapSrc, Number(attrs.travapOrientation), ->
+  rotate attrs.$$element[0], attrs.travapSrc, Number(attrs.travapOrientation or 1), ->
     scope.$apply attrs.travapImageonload
 
 rotate = (img, href, orientation, done) ->
