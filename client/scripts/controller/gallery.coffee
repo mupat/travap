@@ -29,7 +29,7 @@ class Gallery
 
   _init: (place) ->
     @$scope.place = @places.get id: place, =>
-      @$rootscope.pageTitle = "Place - #{@$scope.item.name}" # set title attr
+      @$rootscope.pageTitle = "Place - #{@$scope.place.name}" # set title attr
 
   _reset: ->
     @view = document.querySelector '.gallery-view'
