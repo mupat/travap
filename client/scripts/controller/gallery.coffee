@@ -8,12 +8,19 @@ class Gallery
     open: -1
     play: undefined
     lastPlayItem: undefined
-    openImg: ''
+    openImage:
+      src: ''
+      direction: undefined
+      out: false
+      in: false
+      transition: undefined
+      prepare: false
     loaded: false
     limit: 10000
     fullscreen: false
     intervals: [2, 3, 5]
     interval: 2
+    hideHUD: false
 
   constructor: (@$rootscope, @$scope, $routeParams, @$location, @$interval, @$timeout, @places) ->
     @_reset()
@@ -26,6 +33,7 @@ class Gallery
 
   _reset: ->
     @view = document.querySelector '.gallery-view'
+    @body = document.body
     @imagesLoaded = 0
     @$scope.item = @DEFAULT
     @$scope.place = {}
@@ -47,7 +55,8 @@ class Gallery
 
    _toggleFullscreen: ->
       screenfull.toggle();
-      @$scope.item.fullscreen = !@$scope.item.fullscreen 
+      @$scope.item.fullscreen = !@$scope.item.fullscreen
+      @$scope.item.hideHUD = false
 
   _onload: (index) =>
     @imagesLoaded++
@@ -74,28 +83,77 @@ class Gallery
     if direction is 'prev'
       newIndex = if item.open is start then length else item.open -= 1
 
-    # item.open = newIndex
-    # item.openImg = place.images[item.open]
-    # @_addPosition item.open
-    @_open newIndex
+    @$scope.item.openImage.direction = direction
+    @_applyTransition newIndex
+
+  _applyTransition: (index, transition='scaleMove') ->
+    # make sure we have a out transition
+    @$scope.item.openImage.out = true
+    @$scope.item.openImage.transition = transition
+
+    # make sure we have a in transition and remove after finishing
+    applyEnd = =>
+      @$scope.item.openImage.prepare = false
+      @$scope.item.openImage.in = true
+
+      @$timeout ( => @$scope.item.openImage.in = false ), 200
+
+    # make sure we have a time between out and in transition to move the image to the desired start point
+    applyBetween = => 
+      @$scope.item.openImage.out = false
+      @_open index # apply Image
+      @$scope.item.openImage.prepare = true
+
+      @$timeout applyEnd, 50
+
+    @$timeout applyBetween, 400 #wait a bit and call between step
 
   _playStop: ->
-    item = @$scope.item
-    if item.play?
-      @$interval.cancel item.play
-      item.lastPlayItem = item.open
-      item.play = undefined
+    if @$scope.item.play?
+      @_stop()
       @$scope.close()
       return
 
-    # item.open = item.lastPlayItem or 0
-    @$scope.open item.lastPlayItem || 0
-    item.play = @$interval ( => @$scope.showNext() ), @$scope.item.interval * 1000
+    @$scope.item.open = @$scope.item.lastPlayItem or 0
+    @_start()
+
+  _start: ->
+    selectedInterval = @$scope.item.interval
+    run = ->
+      # check if interval changed, so we need to restart the interval
+      if @$scope.item.interval isnt selectedInterval
+        @_stop()
+        @_start()
+      else
+        @$scope.item.showInterval = false
+        @$scope.showNext()
+        @$timeout ( => @$scope.item.showInterval = true ), 650
+
+    @$scope.item.play = @$interval run.bind(@, selectedInterval), @$scope.item.interval * 1000 + 650
+    run.call @, selectedInterval
+
+    @_removeHUD()
+    @body.onmousemove = =>
+      @$scope.item.hideHUD = false
+      @$timeout.cancel @hudTimeout
+      @_removeHUD()
+
+  _stop: ->
+    @$interval.cancel @$scope.item.play
+    @$scope.item.lastPlayItem = @$scope.item.open
+    @$scope.item.play = undefined
+    @$scope.item.showInterval = false
+    @body.onmousemove = null
+    @$scope.item.hideHUD = false
+    @$timeout.cancel @hudTimeout
+
+  _removeHUD: ->
+    @hudTimeout = @$timeout ( => @$scope.item.hideHUD = true ), 3000
 
   _open: (index) ->
     image = document.getElementById 'image-' + index #get actual image
     # add image to fullscreen layer
-    @$scope.item.openImg = image.src
+    @$scope.item.openImage.src = image.src
     @_addPosition image
 
     show = ->
@@ -103,6 +161,7 @@ class Gallery
       @$scope.item.open = index
 
     @$timeout show.bind(@), @CSS_TRANSITION_TIME
+    
 
   _close: ->
     @$scope.item.open = -1

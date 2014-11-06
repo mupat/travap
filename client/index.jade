@@ -26,5 +26,5 @@ html(
   body(
     data-ng-view
     data-ng-attr-id="{{ pageTitle == 'Places' ? 'map' : 'gallery' }}"
-    data-ng-class="{'fullscreen-active': item.open > -1}"
+    data-ng-class="{'fullscreen-active': item.open > -1, 'no-hud': item.hideHUD}"
   )

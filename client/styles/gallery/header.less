@@ -7,6 +7,7 @@ background-color: @white;
 height: @height-topbar;
 z-index: 2;
 box-shadow: 0 0px 5px 0px fade(@black, 50);
+.transition(top 0.3s ease);
 
 .gallery-play-intervals {
   font-size: 30px;
@@ -116,18 +117,5 @@ box-shadow: 0 0px 5px 0px fade(@black, 50);
 
   &.visible {
     .visible();
-  }
-}
-
-&.fullscreen {
-  background-color: fade(@white, 50);
-
-  ~ .gallery-grid {
-    margin-top: -@height-topbar;
-  }
-
-  ~ .gallery-view.visible {
-    top: 0 !important;
-    height: 100% !important;
   }
 }

@@ -3,11 +3,11 @@ header.gallery-header(
 )
   span.gallery-back.icon-arrow-back(
     data-ng-click="back()"
-    data-ng-hide="item.open > -1"
+    data-ng-hide="item.open > -1 || item.play"
   )
   span.gallery-item-close.icon-close(
     data-ng-click="close()"
-    data-ng-show="item.open > -1"
+    data-ng-show="item.open > -1 && !item.play"
   )
 
   h1.gallery-name
@@ -58,11 +58,22 @@ div.gallery-grid(
 )
 
 div.gallery-view(
-  data-ng-class="{'visible': item.open > -1}"
+  data-ng-class="{'visible': item.open > -1, 'show-interval': item.showInterval}"
   data-ng-click="close()"
   data-ng-swipe-left="showPrevious()"
   data-ng-swipe-right="showNext()"
 )
+  div.gallery-view-interval(
+    class="gallery-view-interval-{{ item.interval }}"
+  )
   img.gallery-view-image(
-    data-ng-src="{{ item.openImg }}"
+    src="{{ item.openImage.src }}"
+    data-ng-class="{\
+      'in-next': item.openImage.in && item.openImage.direction == 'next',\
+      'out-next': item.openImage.out && item.openImage.direction == 'next',\
+      'out-prev': item.openImage.out && item.openImage.direction == 'prev',\
+      'in-prev': item.openImage.in && item.openImage.direction == 'prev',\
+      'prepare-next': item.openImage.prepare && item.openImage.direction == 'next',\
+      'prepare-prev': item.openImage.prepare && item.openImage.direction == 'prev',\
+    }"
   )

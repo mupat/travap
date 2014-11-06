@@ -50,4 +50,16 @@
       .visible();
     }
   }
+
+  &.no-hud {
+    cursor: none !important;
+
+    .gallery-header {
+      top: -@height-topbar * 2;
+    }
+
+    .gallery-view-interval {
+      top: 0;
+    }
+  }
 }
