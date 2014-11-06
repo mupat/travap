@@ -59,7 +59,6 @@ div.gallery-grid(
 
 div.gallery-view(
   data-ng-class="{'visible': item.open > -1, 'show-interval': item.showInterval}"
-  data-ng-click="close()"
   data-ng-swipe-left="showPrevious()"
   data-ng-swipe-right="showNext()"
 )
@@ -67,7 +66,7 @@ div.gallery-view(
     class="gallery-view-interval-{{ item.interval }}"
   )
   img.gallery-view-image(
-    src="{{ item.openImage.src }}"
+    data-ng-src="{{ item.openImage.src }}"
     data-ng-class="{\
       'in-next': item.openImage.in && item.openImage.direction == 'next',\
       'out-next': item.openImage.out && item.openImage.direction == 'next',\

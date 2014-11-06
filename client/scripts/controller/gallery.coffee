@@ -49,14 +49,16 @@ class Gallery
     @$scope.toggleFullscreen = @_toggleFullscreen.bind @
 
     # listen for changes and apply them to the scope
-    document.addEventListener screenfull.raw.fullscreenchange, =>
-      @$scope.$apply =>
-        @$scope.item.fullscreen = screenfull.isFullscreen
+    if screenfull.enabled
+      document.addEventListener screenfull.raw.fullscreenchange, =>
+        @$scope.$apply =>
+          @$scope.item.fullscreen = screenfull.isFullscreen
 
    _toggleFullscreen: ->
-      screenfull.toggle();
-      @$scope.item.fullscreen = !@$scope.item.fullscreen
-      @$scope.item.hideHUD = false
+    return unless screenfull.enabled
+    screenfull.toggle();
+    @$scope.item.fullscreen = !@$scope.item.fullscreen
+    @$scope.item.hideHUD = false
 
   _onload: (index) =>
     @imagesLoaded++
@@ -134,7 +136,8 @@ class Gallery
 
     @_removeHUD()
     @body.onmousemove = =>
-      @$scope.item.hideHUD = false
+      @$scope.$apply =>
+        @$scope.item.hideHUD = false
       @$timeout.cancel @hudTimeout
       @_removeHUD()
 
