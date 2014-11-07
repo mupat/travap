@@ -26,7 +26,7 @@ src =
   server: "#{__dirname}/server/index.coffee"
   assets:
     fonts: "#{__dirname}/client/assets/fonts/**/*.{eot,svg,ttf,woff}"
-    images: "#{__dirname}/client/assets/images/**/*.{gif,jpg,jpeg,png,ico}"
+    images: "#{__dirname}/client/assets/images/**/*.{gif,jpg,jpeg,png,ico,xml}"
   vendor:
     js: [
       "#{bower}/angular/angular.min.js"
