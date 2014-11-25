@@ -66,7 +66,7 @@ gulp.task 'build:scripts:vendor', ->
 
 gulp.task 'build:templates', ->
   gTasks.jade.build src.templates.index, dest.base, true
-  gTasks.jade.build src.templates.files, dest.templates, true
+  gTasks.jade.build src.templates.files, dest.templates
 
 gulp.task 'build:styles', ->
   gTasks.less.build src.styles.index, dest.base
