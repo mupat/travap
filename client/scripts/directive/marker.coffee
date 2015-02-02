@@ -15,5 +15,5 @@ module.exports = ->
     link: link
     scope: {}
     templateUrl: 'templates/marker.html'
-    
+
   return options

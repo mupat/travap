@@ -42,10 +42,10 @@
 }
 
 .columns(@number) {
-  -webkit-column-count: @number;  
-  -moz-column-count:    @number;  
+  -webkit-column-count: @number;
+  -moz-column-count:    @number;
   column-count:         @number;
-  
+
 }
 
 .columns-gap (@amount) {
@@ -73,4 +73,15 @@
 .visible () {
   opacity: 1;
   visibility: visible;
+}
+
+.link-style () {
+  color: @highlight;
+  text-decoration: none;
+  .transition(color 0.3s ease);
+
+  &:hover {
+    color: darken(@highlight, 10);
+    text-decoration: none;
+  }
 }

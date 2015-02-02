@@ -1,11 +1,17 @@
 div
-  header.marker-header
-    h3.marker-name {{infos.name}}
-      span.marker-amount {{infos.amount}}
-    div.marker-duration
-      span {{infos.begin}}
-      small -
-      span {{infos.end}}
+  i.icon-map-pin.marker-icon(
+    data-ng-click="infos.visible = !infos.visible"
+  )
+  div.marker-infos(data-ng-class="{'visible': infos.visible}")
+    header.marker-header
+      h3.marker-name {{infos.name}}
+        span.marker-amount {{infos.amount}}
+      div.marker-duration
+        span {{infos.begin}}
+        small -
+        span {{infos.end}}
+      span.marker-button.goto.icon-arrow-prev
+    //- button.marker-button.goto Details
   //- div.marker-content-wrapper
   //-   section.marker-content
   //-     p {{infos.description}}

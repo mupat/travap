@@ -1,57 +1,92 @@
 .travap-place-marker {
-  width: 200px;
   margin-top: -50px;
-  margin-left: -100px;
+  margin-left: -25px;
+  font-size: 50px;
+  height: 50px;
+  width: 50px;
   position: relative;
-  background-color: @black;
-  color: @white;
-  box-shadow: 0 0 5px 0px fade(@black, 50);
-  border-radius: 5px;
+  color: @highlight;
+  cursor: default;
 
-  &:after {
-    content: "";
+  .marker-icon {
+    cursor: pointer;
+  }
+
+  .marker-infos {
+    top: 93%;
     position: absolute;
-    bottom: -10px;
-    left: 90px;
-    border-top: solid 10px @black;
-    border-right: solid 10px transparent;
-    border-left: solid 10px transparent;
+    background-color: @white;
+    border-radius: 3px;
+    height: auto;
+    display: inline-block;
+    .transition(all 0.3s ease);
+    width: 0;
+    left: 25px;
+    height: 0;
+    overflow: hidden;
+
+    &.visible {
+      width: 200px;
+      left: -75px;
+      height: 67px;
+    }
+  }
+
+  .marker-button {
+    float: right;
+    margin-top: -5px;
+    margin-right: 1px;
+    font-size: 24px;
+    line-height: 0;
+    cursor: pointer;
+
+    &:hover {
+      color: @highlight;
+    }
   }
 
   .marker-header {
-    text-align: center;
+    text-align: left;
+    color: @black;
 
     .marker-name {
-      font-weight: @font-regular;
-      color: @highlight;
+      font-weight: @font-light;
+      color: @white;
+      font-size: 24px;
+      padding-left: 5px;
+      background-color: @highlight;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+      margin-bottom: 10px;
     }
 
     .marker-duration {
-      font-size: 14px;
-      margin-bottom: 5px;
+      font-size: 13px;
+      width: 175px;
+      padding-left: 5px;
+      margin-top: -3px;
+      float: left;
 
       > span {
         padding: 0px 10px;
+      }
+
+      > span:first-child {
+        padding-left: 0;
+      }
+
+      > span:last-child {
+        padding-right: 0;
       }
     }
   }
 
   .marker-amount {
-    height: 25px;
-    right: -10px;
-    top: -10px;
+    width: 50px;
+    float: right;
+    text-align: center;
     display: inline-block;
-    position: absolute;
-    background-color: @white;
-    color: @highlight;
-    padding: 0px 5px;
-    border-radius: 50%;
-    font-weight: @font-regular;
-  }
-
-  &:hover {
-    .marker-content-wrapper {
-      height: 100px;
-    }
+    color: @white;
+    font-weight: @font-light;
   }
 }
