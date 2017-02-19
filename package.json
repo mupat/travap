@@ -2,9 +2,7 @@
   "name": "travap",
   "version": "1.0.0",
   "description": "simple map to show images from journeys placed on a map",
-  "scripts": {
-    "start": "",
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git://github.com/mupat/travap.git"
@@ -16,8 +14,12 @@
   },
   "homepage": "https://github.com/mupat/travap",
   "dependencies": {
+    "bluebird": "^3.4.7",
+    "glob": "^7.1.1",
+    "restify": "^4.3.0",
+    "restify-plugins": "^1.5.1"
   },
   "devDependencies": {
-
+    "node-dev": "^3.1.3"
   }
 }
