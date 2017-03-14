@@ -1,5 +1,4 @@
 const restify = require('restify');
-const plugins = require('restify-plugins');
 const package = require('./package.json');
 const Places = require('./places');
 
@@ -9,8 +8,16 @@ const server = restify.createServer({
   version: package.version
 });
 
-server.use(plugins.acceptParser(server.acceptable));
-server.use(plugins.queryParser());
+server.use(restify.acceptParser(server.acceptable));
+server.use(restify.queryParser());
+server.use(restify.CORS());
+
+server.opts(/.+/, (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With');
+  res.send(200);
+});
 
 places = new Places(placesPath);
 server.get('/places', (req, res, next) => {
