@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "simple map to show images from journeys placed on a map",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,5 @@
     "glob": "^7.1.1",
     "restify": "^4.3.0",
     "restify-plugins": "^1.5.1"
-  },
-  "devDependencies": {
-    "node-dev": "^3.1.3"
   }
 }

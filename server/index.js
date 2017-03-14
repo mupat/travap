@@ -1,6 +1,6 @@
 const restify = require('restify');
 const plugins = require('restify-plugins');
-const package = require('./../package.json');
+const package = require('./package.json');
 const Places = require('./places');
 
 const placesPath = `${__dirname}/../places`

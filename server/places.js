@@ -18,8 +18,8 @@ class Places {
     return this.places.find(place => place.id == id)
   }
 
-  image(path) {
-    return fs.readFileAsync(path.join(this.path, path))
+  image(image_path) {
+    return fs.readFileAsync(path.join(this.path, image_path))
   }
 
   _cachePlaces() {
