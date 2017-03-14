@@ -2,7 +2,9 @@
   "name": "travap",
   "version": "1.0.0",
   "description": "simple map to show images from journeys placed on a map",
-  "scripts": {},
+  "scripts": {
+    "start": "node server/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/mupat/travap.git"
